@@ -22,7 +22,17 @@ function Weather() {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/weather?city=${encodeURIComponent(city)}`);
       if (!response.ok) {
-        throw new Error(`Server responded with ${response.status}`);
+        // Try to extract error message from response body
+          let errMsg = `Server responded with ${response.status}`;
+          try {
+            const errData = await response.json();
+            if (errData && errData.message) {
+              errMsg = errData.message;
+            }
+          } catch (_) {
+            // ignore JSON parse errors
+          }
+          throw new Error(errMsg);
       }
       const data = await response.json();
       setWeather(data);
