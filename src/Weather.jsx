@@ -37,7 +37,7 @@ function Weather() {
         }
         throw new Error(errMsg);
       }
-      const data = await response.json();
+      const { data } = await response.json();
       setWeather(data);
       // Determine if data is empty
       const isEmpty = !data || (typeof data === 'object' && Object.keys(data).length === 0);
@@ -68,9 +68,12 @@ function Weather() {
       {error && <p style={{ color: 'red' }}>Error: {error}</p>}
       {weather && (
         <div>
-          <p>City: {city}</p>
-          <p>Description: {weather.description}</p>
-          <p>Temperature: {weather.temperature}°C</p>
+          <p>City: {weather.city}, {weather.country}</p>
+          <p>Condition: {weather.condition?.label} <img src={weather.condition?.icon} alt={weather.condition?.label} style={{ verticalAlign: 'middle' }} /></p>
+          <p>Temperature: {weather.temperature?.current}°{weather.temperature?.unit?.charAt(0).toUpperCase()}{weather.temperature?.unit?.slice(1)} (Feels like: {weather.temperature?.feelsLike}°{weather.temperature?.unit?.charAt(0).toUpperCase()}{weather.temperature?.unit?.slice(1)})</p>
+          <p>Humidity: {weather.details?.humidity}%</p>
+          <p>Wind: {weather.details?.windSpeed} {weather.details?.windUnit}</p>
+          <p>Fetched at: {new Date(weather.fetchedAt).toLocaleString()}</p>
         </div>
       )}
     </section>
