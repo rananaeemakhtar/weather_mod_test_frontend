@@ -11,33 +11,40 @@ function Weather() {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  // Track overall request status: 'idle' | 'loading' | 'success' | 'error' | 'empty'
+  const [status, setStatus] = useState('idle');
 
   const handleSubmit = async (e) => {
-    console.log('Submitting city:', import.meta.env);
     e.preventDefault();
     if (!city) return;
+    // Reset states
     setLoading(true);
     setError(null);
     setWeather(null);
+    setStatus('loading');
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/weather?city=${encodeURIComponent(city)}`);
       if (!response.ok) {
         // Try to extract error message from response body
-          let errMsg = `Server responded with ${response.status}`;
-          try {
-            const errData = await response.json();
-            if (errData && errData.message) {
-              errMsg = errData.message;
-            }
-          } catch (_) {
-            // ignore JSON parse errors
+        let errMsg = `Server responded with ${response.status}`;
+        try {
+          const errData = await response.json();
+          if (errData && errData.message) {
+            errMsg = errData.message;
           }
-          throw new Error(errMsg);
+        } catch (_) {
+          // ignore JSON parse errors
+        }
+        throw new Error(errMsg);
       }
       const data = await response.json();
       setWeather(data);
+      // Determine if data is empty
+      const isEmpty = !data || (typeof data === 'object' && Object.keys(data).length === 0);
+      setStatus(isEmpty ? 'empty' : 'success');
     } catch (err) {
       setError(err.message);
+      setStatus('error');
     } finally {
       setLoading(false);
     }

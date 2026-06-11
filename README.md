@@ -1,16 +1,97 @@
-# React + Vite
+# React Weather Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React application for searching and displaying weather information from the backend API.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+* Node.js 18 or higher
+* npm
 
-## React Compiler
+## Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Clone the repository:
 
-## Expanding the ESLint configuration
+```bash
+git clone <repository-url>
+cd <project-folder>
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Install dependencies:
+
+```bash
+npm install
+```
+
+## Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+Replace the URL with the address of your backend API if different.
+
+## Running the Application
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The application will be available at:
+
+```text
+http://localhost:5173
+```
+
+## Build for Production
+
+Generate an optimized production build:
+
+```bash
+npm run build
+```
+
+The build output will be generated in the `dist` directory.
+
+## Preview Production Build
+
+To preview the production build locally:
+
+```bash
+npm run preview
+```
+
+public/
+.env
+package.json
+vite.config.js
+```
+
+## Available Scripts
+
+Start development server:
+
+```bash
+npm run dev
+```
+
+Build application:
+
+```bash
+npm run build
+```
+
+Preview production build:
+
+```bash
+npm run preview
+```
+
+## Notes
+
+* Ensure the backend API is running before starting the frontend.
+* Verify that `VITE_API_URL` points to the correct backend server.
+* After modifying the `.env` file, restart the development server.
