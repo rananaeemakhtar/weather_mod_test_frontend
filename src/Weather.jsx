@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './Weather.css';
 
 /**
  * Weather component
@@ -51,29 +52,40 @@ function Weather() {
   };
 
   return (
-    <section id="weather-screen" style={{ padding: '1rem' }}>
-      <h2>Weather Lookup</h2>
-      <form onSubmit={handleSubmit} style={{ marginBottom: '1rem' }}>
+    <section id="weather-screen" className="weather-section">
+      <h2 className="weather-title">Weather Lookup</h2>
+      <form onSubmit={handleSubmit} className="weather-form">
         <input
           type="text"
           placeholder="Enter city"
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          style={{ marginRight: '0.5rem' }}
+          className="weather-input"
         />
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={loading} className="weather-button">
           {loading ? 'Loading...' : 'Get Weather'}
         </button>
       </form>
-      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-      {weather && (
-        <div>
-          <p>City: {weather.city}, {weather.country}</p>
-          <p>Condition: {weather.condition?.label} <img src={weather.condition?.icon} alt={weather.condition?.label} style={{ verticalAlign: 'middle' }} /></p>
-          <p>Temperature: {weather.temperature?.current}°{weather.temperature?.unit?.charAt(0).toUpperCase()}{weather.temperature?.unit?.slice(1)} (Feels like: {weather.temperature?.feelsLike}°{weather.temperature?.unit?.charAt(0).toUpperCase()}{weather.temperature?.unit?.slice(1)})</p>
-          <p>Humidity: {weather.details?.humidity}%</p>
-          <p>Wind: {weather.details?.windSpeed} {weather.details?.windUnit}</p>
-          <p>Fetched at: {new Date(weather.fetchedAt).toLocaleString()}</p>
+      {/* Status messages */}
+      {status === 'loading' && <p className="weather-loading">Fetching weather data...</p>}
+      {status === 'error' && error && <p className="weather-error">Error: {error}</p>}
+      {status === 'empty' && <p className="weather-empty">No weather information available.</p>}
+      {status === 'success' && weather && (
+        <div className="weather-card">
+          <h3 className="weather-city">{weather.city}, {weather.country}</h3>
+          <p className="weather-condition">
+            {weather.condition?.label}
+            {weather.condition?.icon && (
+              <img src={weather.condition?.icon} alt={weather.condition?.label} className="weather-icon" />
+            )}
+          </p>
+          <p className="weather-temp">
+            {weather.temperature?.current}°{weather.temperature?.unit?.charAt(0).toUpperCase()}{weather.temperature?.unit?.slice(1)}
+            <span className="weather-feels"> (Feels like: {weather.temperature?.feelsLike}°{weather.temperature?.unit?.charAt(0).toUpperCase()}{weather.temperature?.unit?.slice(1)})</span>
+          </p>
+          <p className="weather-humidity">Humidity: {weather.details?.humidity}%</p>
+          <p className="weather-wind">Wind: {weather.details?.windSpeed} {weather.details?.windUnit}</p>
+          <p className="weather-fetched">Updated: {new Date(weather.fetchedAt).toLocaleString()}</p>
         </div>
       )}
     </section>

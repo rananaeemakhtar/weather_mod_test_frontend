@@ -1,0 +1,144 @@
+/* Weather component styling */
+
+/* Container */
+.weather-section {
+  max-width: 480px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #f9fafb; /* light gray */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Title */
+.weather-title {
+  margin: 0 0 1rem;
+  font-size: 1.75rem;
+  color: #2c3e50;
+  text-align: center;
+}
+
+/* Form */
+.weather-form {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.weather-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.weather-input:focus {
+  border-color: #3b82f6; /* blue-500 */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.weather-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background: #3b82f6; /* blue-500 */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.weather-button:disabled {
+  background: #9ca3af; /* gray-400 */
+  cursor: not-allowed;
+}
+
+.weather-button:not(:disabled):hover {
+  background: #2563eb; /* blue-600 */
+}
+
+/* Status messages */
+.weather-loading,
+.weather-error,
+.weather-empty {
+  text-align: center;
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.weather-error {
+  color: #dc2626; /* red-600 */
+}
+
+.weather-empty {
+  color: #6b7280; /* gray-500 */
+}
+
+/* Weather card */
+.weather-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.weather-city {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827; /* gray-900 */
+}
+
+.weather-condition {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #374151; /* gray-700 */
+}
+
+.weather-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.weather-temp {
+  margin: 0.5rem 0;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #1f2937; /* gray-800 */
+}
+
+.weather-feels {
+  font-size: 0.85rem;
+  color: #6b7280; /* gray-500 */
+  margin-left: 0.4rem;
+}
+
+.weather-humidity,
+.weather-wind,
+.weather-fetched {
+  margin: 0.25rem 0;
+  font-size: 0.94rem;
+  color: #4b5563; /* gray-600 */
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .weather-section {
+    margin: 1rem;
+    padding: 1rem;
+  }
+  .weather-button {
+    padding: 0.5rem 0.75rem;
+  }
+}
