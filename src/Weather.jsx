@@ -51,13 +51,22 @@ function Weather() {
     }
   };
 
+  const unit = weather?.temperature?.unit?.charAt(0).toUpperCase() + weather?.temperature?.unit?.slice(1);
+
   return (
-    <section id="weather-screen" className="weather-section">
-      <h2 className="weather-title">Weather Lookup</h2>
+    <section id="weather-screen">
+      {/* Jumbotron Hero */}
+      <div className="weather-jumbotron">
+        <div className="jumbotron-icon">🌤</div>
+        <h1 className="jumbotron-title">Weather Lookup</h1>
+        <p className="jumbotron-subtitle">Enter a city name to get current weather conditions</p>
+      </div>
+
+      {/* Form */}
       <form onSubmit={handleSubmit} className="weather-form">
         <input
           type="text"
-          placeholder="Enter city"
+          placeholder="Enter city name..."
           value={city}
           onChange={(e) => setCity(e.target.value)}
           className="weather-input"
@@ -66,25 +75,60 @@ function Weather() {
           {loading ? 'Loading...' : 'Get Weather'}
         </button>
       </form>
+
       {/* Status messages */}
-      {status === 'loading' && <p className="weather-loading">Fetching weather data...</p>}
-      {status === 'error' && error && <p className="weather-error">Error: {error}</p>}
-      {status === 'empty' && <p className="weather-empty">No weather information available.</p>}
+      {status === 'loading' && (
+        <div className="weather-alert weather-alert--loading">
+          <span className="alert-spinner" /> Fetching weather data...
+        </div>
+      )}
+      {status === 'error' && error && (
+        <div className="weather-alert weather-alert--error">
+          {error}
+        </div>
+      )}
+      {status === 'empty' && (
+        <div className="weather-alert weather-alert--empty">
+          No weather information available.
+        </div>
+      )}
+
+      {/* Weather result card */}
       {status === 'success' && weather && (
         <div className="weather-card">
+          <div className="card-accent" />
           <h3 className="weather-city">{weather.city}, {weather.country}</h3>
-          <p className="weather-condition">
-            {weather.condition?.label}
-            {weather.condition?.icon && (
-              <img src={weather.condition?.icon} alt={weather.condition?.label} className="weather-icon" />
-            )}
-          </p>
+
+          {weather.condition?.icon && (
+            <img
+              src={weather.condition.icon}
+              alt={weather.condition.label}
+              className="weather-icon"
+            />
+          )}
+
+          <p className="weather-condition-label">{weather.condition?.label}</p>
+
           <p className="weather-temp">
-            {weather.temperature?.current}°{weather.temperature?.unit?.charAt(0).toUpperCase()}{weather.temperature?.unit?.slice(1)}
-            <span className="weather-feels"> (Feels like: {weather.temperature?.feelsLike}°{weather.temperature?.unit?.charAt(0).toUpperCase()}{weather.temperature?.unit?.slice(1)})</span>
+            {weather.temperature?.current}°{unit}
           </p>
-          <p className="weather-humidity">Humidity: {weather.details?.humidity}%</p>
-          <p className="weather-wind">Wind: {weather.details?.windSpeed} {weather.details?.windUnit}</p>
+          <p className="weather-feels">
+            Feels like {weather.temperature?.feelsLike}°{unit}
+          </p>
+
+          <div className="weather-details">
+            <div className="detail-item">
+              <span className="detail-icon">💧</span>
+              <span className="detail-label">Humidity</span>
+              <span className="detail-value">{weather.details?.humidity}%</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-icon">💨</span>
+              <span className="detail-label">Wind</span>
+              <span className="detail-value">{weather.details?.windSpeed} {weather.details?.windUnit}</span>
+            </div>
+          </div>
+
           <p className="weather-fetched">Updated: {new Date(weather.fetchedAt).toLocaleString()}</p>
         </div>
       )}
